@@ -5,7 +5,7 @@ const renderers = {
 }
 
 
-__flybuk.on('init', function() {
+__flybuk.on('init:after', function() {
     const d = new Date()
     const year = d.getFullYear()
     const month = d.getMonth() + 1

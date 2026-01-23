@@ -10,31 +10,74 @@ window.__flybuk = {
     hooks: {},
     on(e, fn) { (this.hooks[e] ||= []).push(fn) },
     emit(e, d) { (this.hooks[e] || []).forEach(fn => fn(d)) },
-    config
-}
+    config,
 
-function load(link, cb = () => { }) {
-    let s = document.createElement('script')
-    s.src = link
-    s.defer = true
-    s.onload = cb
-    s.onerror = (e) => console.error(e)
-    document.body.appendChild(s)
+    State: {},
+    Settings: { currency: "RUB" },
+    plugins: [],
+
+    getState() { return this.State },
+    setState(patch) {
+        this.State = { ...this.State, ...patch }
+        this.emit('state:changed', this.State)
+    },
+
+    getSettings() { return this.Settings },
+    setSettings(patch) {
+        this.Settings = { ...this.Settings, ...patch }
+        this.emit('settings:changed', this.Settings)
+    },
+
+    api() {
+        return {
+            on: this.on.bind(this),
+            emit: this.emit.bind(this),
+            getState: this.getState.bind(this),
+            setState: this.setState.bind(this),
+            getSettings: this.getSettings.bind(this),
+            setSettings: this.setSettings.bind(this)
+        }
+    },
+
+    use(plugin) {
+        this.plugins.push(plugin)
+        plugin(this.api())
+    },
+
+    load(src, cb = () => { }) {
+        let s = document.createElement('script')
+        s.src = src
+        s.defer = true
+        s.onload = cb
+        s.onerror = (e) => console.error(e)
+        document.body.appendChild(s)
+    },
+
+    loadPlugin(src, cb = () => { }) {
+        let s = document.createElement('script')
+        s.src = src
+        s.defer = true
+        s.onload = cb
+        s.onerror = (e) => console.error(e)
+        document.body.appendChild(s)
+    }
 }
 
 __flybuk.emit('init:before')
 
-load('https://unpkg.com/localforage/dist/localforage.min.js', async () => {
+__flybuk.load('https://unpkg.com/localforage/dist/localforage.min.js', async () => {
     localforage.config({
         name: "__flydgetApp",
         driver: localforage.INDEXEDDB
     })
 
-    window.__flybuk.State = await localforage.getItem('state') || { summ: 50 }
-    window.__flybuk.Settings = await localforage.getItem('settings') || { currency: 'RUB' }
+    window.__flybuk.State = await localforage.getItem('state') || window.__flybuk.getState()
+    window.__flybuk.Settings = await localforage.getItem('settings') || window.__flybuk.getSettings()
 
     __flybuk.emit('init')
 })
 
-load("initUI.js")
-load('renderUI.js')
+__flybuk.on('init', () => {
+    __flybuk.load("initUI.js")
+    __flybuk.load('renderUI.js', () => __flybuk.emit('init:after'))
+})

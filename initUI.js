@@ -2,12 +2,20 @@ const targetCont = __flybuk.config.target
 
 const mainBlock = `
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap');
+
 :root {
     --bg-color: #1b1b1b;
-    --text-color: #fff;
+    --text-color: #E6D5B8;
     --error-color: red;
     --header-font-size: 32px;
     --text-font-size: 24px;
+}
+
+* {
+    font-family: Jura;
+    font-size: var(--text-font-size);
+    font-weight: bold;
 }
 
 body {
@@ -135,8 +143,3 @@ Object.values(ui).forEach(el => html += el)
 
 if (targetCont) { document.querySelector(targetCont).innerHTML = html }
 else { document.body.innerHTML = html + document.body.innerHTML }
-
-__flybuk.emit('init:after')
-__flybuk.emit('ui:before-render')
-
-__flybuk.emit('ui:render')
