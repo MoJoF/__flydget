@@ -42,3 +42,4 @@ load('https://unpkg.com/localforage/dist/localforage.min.js', async () => {
 })
 
 load("initUI.js")
+load('renderUI.js')

@@ -35,7 +35,7 @@ const mainBlock = `
 `
 
 const firstRunBlock = `
-<div class="first-run-block">
+<div class="first-run-block" style="display: none;">
     <div class="block">
         <h2>Введите сумму ваш бюджет:</h2>
         <input type="number" />
@@ -47,11 +47,55 @@ const firstRunBlock = `
 
 const newSpentBlock = `
 <div class="new-spent-block" style="display: none;">
+    <div>
+        <h2>Новый расход:</h2>
+        <div class="row">
+            <span>Сумма:</span>
+            <input type="number" id="new-spent-summ" />
+        </div>
+        <div class="row">
+            <span>Описание:</span>
+            <input id="new-spent-desc" />
+        </div>
+        <div class="row">
+            <span>Категория:</span>
+            <select id="new-spent-category"></select>
+        </div>
+        <span class="error" style="display: none;">К сожалению, сумма расхода не может быть больше оставшегося бюджета</span>
+    </div>
+</div>
+`
+
+const settingsBlock = `
+<div class="settings-block" style="display: none;">
     <button>Назад</button>
     <h2>Настройки</h2>
     <div class="row">
         <h3>Текущая валюта</h3>
-        <select></select>
+        <select>
+            <option value="RUB">RUB</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+        </select>
+    </div>
+    <div class="block">
+        <h3>Список категорий</h3>
+        <div class="row">
+            <input id="create-category" />
+            <button>+</button>
+        </div>
+    </div>
+    <div class="block"></div>
+</div>
+`
+
+const newReceiveBlock = `
+<div class="new-receive-block">
+    <div>
+        <h2>Введите сумму нового дохода:</h2>
+        <input type="number" />
+        <span class="error" style="display: none;">Число не может быть отрицательным</span>
+        <button>Подтвердить</button>
     </div>
 </div>
 `
@@ -59,7 +103,9 @@ const newSpentBlock = `
 const ui = {
     mainBlock,
     firstRunBlock,
-    newSpentBlock
+    newSpentBlock,
+    settingsBlock,
+    newReceiveBlock
 }
 
 let html = ""
@@ -69,8 +115,7 @@ if (targetCont) { document.querySelector(targetCont).innerHTML = html }
 else { document.body.innerHTML = html + document.body.innerHTML }
 
 __flybuk.emit('init:after')
-
 __flybuk.emit('ui:before-render')
+__flybuk.emit('ui:render', { state: __flybuk.State, settings: __flybuk.Settings })
 
-load('renderUI.js')
 
