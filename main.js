@@ -30,13 +30,8 @@ load('https://unpkg.com/localforage/dist/localforage.min.js', async () => {
         driver: localforage.INDEXEDDB
     })
 
-    window.__flybuk.State = {}
-    window.__flybuk.Settings = {}
-
-    localforage.getItem('data')
-        .then(v => { if (v) window.__flybuk.State = v })
-    localforage.getItem('data')
-        .then(v => { if (v) window.__flybuk.Settings = v })
+    window.__flybuk.State = await localforage.getItem('state') || { summ: 50 }
+    window.__flybuk.Settings = await localforage.getItem('settings') || { currency: 'RUB' }
 
     __flybuk.emit('init')
 })

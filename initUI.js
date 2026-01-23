@@ -1,7 +1,29 @@
 const targetCont = __flybuk.config.target
 
 const mainBlock = `
-<div class="main-block" style="display: none;">
+<style>
+:root {
+    --bg-color: #1b1b1b;
+    --text-color: #fff;
+    --error-color: red;
+    --header-font-size: 32px;
+    --text-font-size: 24px;
+}
+
+body {
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+.main-block {
+    padding: 50px 17.7vw;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+</style>
+
+<div class="main-block">
 <header>
     <div class="row">
         <span id="month-year"></span>
@@ -72,7 +94,7 @@ const settingsBlock = `
     <h2>Настройки</h2>
     <div class="row">
         <h3>Текущая валюта</h3>
-        <select>
+        <select id="settings-currency">
             <option value="RUB">RUB</option>
             <option value="USD">USD</option>
             <option value="EUR">EUR</option>
@@ -90,7 +112,7 @@ const settingsBlock = `
 `
 
 const newReceiveBlock = `
-<div class="new-receive-block">
+<div class="new-receive-block" style="display: none;">
     <div>
         <h2>Введите сумму нового дохода:</h2>
         <input type="number" />
@@ -116,6 +138,5 @@ else { document.body.innerHTML = html + document.body.innerHTML }
 
 __flybuk.emit('init:after')
 __flybuk.emit('ui:before-render')
-__flybuk.emit('ui:render', { state: __flybuk.State, settings: __flybuk.Settings })
 
-
+__flybuk.emit('ui:render')
