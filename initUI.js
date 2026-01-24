@@ -140,6 +140,3 @@ const ui = {
 
 let html = ""
 Object.values(ui).forEach(el => html += el)
-
-if (targetCont) { document.querySelector(targetCont).innerHTML = html }
-else { document.body.innerHTML = html + document.body.innerHTML }

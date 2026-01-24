@@ -63,6 +63,24 @@ window.__flybuk = {
     }
 }
 
+window.__flybuk.select = function (selector, multiply = false) {
+    if (multiply) return document.querySelectorAll(selector)
+    return document.querySelector(selector)
+}
+
+window.__flybuk.hide = function (selector) {
+    const el = __flybuk.select(selector)
+    console.log(el)
+    if (!el) return
+    el.style.display = 'none'
+}
+
+window.__flybuk.show = function (selector, mode = "flex") {
+    const el = __flybuk.select(selector)
+    if (!el) return
+    el.style.display = mode
+}
+
 __flybuk.emit('init:before')
 
 __flybuk.load('https://unpkg.com/localforage/dist/localforage.min.js', async () => {
@@ -78,6 +96,11 @@ __flybuk.load('https://unpkg.com/localforage/dist/localforage.min.js', async () 
 })
 
 __flybuk.on('init', () => {
-    __flybuk.load("initUI.js")
-    __flybuk.load('renderUI.js', () => __flybuk.emit('init:after'))
+    __flybuk.load("initUI.js", () => {
+        __flybuk.load('renderUI.js', () => {
+            
+        })
+    })
+
+    __flybuk.emit('init:after')
 })
