@@ -70,7 +70,6 @@ window.__flybuk.select = function (selector, multiply = false) {
 
 window.__flybuk.hide = function (selector) {
     const el = __flybuk.select(selector)
-    console.log(el)
     if (!el) return
     el.style.display = 'none'
 }
@@ -96,10 +95,10 @@ __flybuk.load('https://unpkg.com/localforage/dist/localforage.min.js', async () 
 })
 
 __flybuk.on('init', () => {
-    __flybuk.load("initUI.js", () => {
-        __flybuk.load('renderUI.js', () => {
-            
-        })
+    __flybuk.load('sync.js')
+    __flybuk.load('initUI.js', () => {
+        __flybuk.emit('ui:prepare')
+        document.body.innerHTML = html
     })
 
     __flybuk.emit('init:after')

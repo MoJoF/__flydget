@@ -4,28 +4,16 @@ const renderers = {
     'new-spent-category': (sel, value) => { /* тут будет рендеринг категорий расходов */ },
 }
 
-__flybuk.on('ui:prepare', (data) => {
-    // const { html, targetCont } = data
-    console.log(data.targetCont)
-    if (targetCont) { document.querySelector(targetCont).innerHTML = html }
-    else { document.body.innerHTML = html + document.body.innerHTML }
-})
 
-__flybuk.on('ui:ready', () => {
+__flybuk.on('ui:render', () => {
     if (!__flybuk.getState().summ) {
-        __flybuk.hide('#main-block')
-        __flybuk.show('#first-run-block')
+        document.querySelector('.main-block').style.display = "none"
+        document.querySelector('.first-run-block').style.display = "flex"
+    } else {
+        const d = new Date()
+        const year = d.getFullYear()
+        const month = d.getMonth() + 1
+        renderers['simple']('#month-year', `${month}.${year}`)
+        renderers['simple']('#summ-and-currency', `${__flybuk.State.summ} ${__flybuk.Settings.currency}`)
     }
 })
-// __flybuk.on('ui:ready', function () {
-//     if (!__flybuk.getState().summ) {
-//         __flybuk.hide('#main-block')
-//         __flybuk.show('#first-run-block')
-//     } else {
-//         const d = new Date()
-//         const year = d.getFullYear()
-//         const month = d.getMonth() + 1
-//         renderers['simple']('#month-year', `${month}.${year}`)
-//         renderers['simple']('#summ-and-currency', `${__flybuk.State.summ} ${__flybuk.Settings.currency}`)
-//     }
-// })
