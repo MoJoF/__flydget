@@ -13,7 +13,21 @@ window.__flybuk = {
     config,
 
     State: {},
-    Settings: { currency: "RUB" },
+    Settings: {
+        currency: "RUB",
+        categories: [
+            "Жильё",
+            "Продукты",
+            "Транспорт",
+            "Здоровье",
+            "Связь",
+            "Кредиты",
+            "Развлечения",
+            "Одежда",
+            "Спорт",
+            "Подарки"
+        ]
+    },
     plugins: [],
 
     getState() { return this.State },
@@ -80,15 +94,13 @@ window.__flybuk.show = function (selector, mode = "flex") {
     el.style.display = mode
 }
 
-__flybuk.emit('init:before')
+__flybuk.load('logger.js', () => __flybuk.emit('init:before'))
 
 __flybuk.load('https://unpkg.com/localforage/dist/localforage.min.js', async () => {
     localforage.config({
         name: "__flydgetApp",
         driver: localforage.INDEXEDDB
     })
-
-    __flybuk.load('logger.js')
 
     window.__flybuk.State = await localforage.getItem('state') || window.__flybuk.getState()
     window.__flybuk.Settings = await localforage.getItem('settings') || window.__flybuk.getSettings()
@@ -99,9 +111,10 @@ __flybuk.load('https://unpkg.com/localforage/dist/localforage.min.js', async () 
 __flybuk.on('init', () => {
     __flybuk.load('sync.js')
     __flybuk.load('initUI.js', () => {
-        __flybuk.emit('ui:prepare')
-        document.body.innerHTML = html
+        __flybuk.load('renderUI.js', () => {
+            __flybuk.emit('ui:prepare')
+            document.body.innerHTML = __flybuk.html
+            __flybuk.emit('ui:render')
+        })
     })
-
-    __flybuk.emit('init:after')
 })

@@ -1,4 +1,5 @@
 const on_list = [
+    'init:before',
     'init',
     'ui:prepare',
     'ui:render',

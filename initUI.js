@@ -138,10 +138,5 @@ const ui = {
     newReceiveBlock
 }
 
-let html = ""
-Object.values(ui).forEach(el => html += el)
-
-__flybuk.on('ui:prepare', () => {
-    if (document.readyState === 'complete')
-        __flybuk.load('renderUI.js', () => __flybuk.emit('ui:render'))
-})
+__flybuk.html = ""
+Object.values(ui).forEach(el => __flybuk.html += el)

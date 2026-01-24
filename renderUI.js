@@ -16,4 +16,6 @@ __flybuk.on('ui:render', () => {
         renderers['simple']('#month-year', `${month}.${year}`)
         renderers['simple']('#summ-and-currency', `${__flybuk.State.summ} ${__flybuk.Settings.currency}`)
     }
+
+    __flybuk.emit('init:after')
 })
