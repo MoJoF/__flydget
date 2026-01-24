@@ -88,6 +88,8 @@ __flybuk.load('https://unpkg.com/localforage/dist/localforage.min.js', async () 
         driver: localforage.INDEXEDDB
     })
 
+    __flybuk.load('logger.js')
+
     window.__flybuk.State = await localforage.getItem('state') || window.__flybuk.getState()
     window.__flybuk.Settings = await localforage.getItem('settings') || window.__flybuk.getSettings()
 
