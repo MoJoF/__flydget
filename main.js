@@ -3,6 +3,7 @@ const key = script.dataset.key
 const target = script.dataset.target
 
 const config = {
+    debug: true,
     target
 }
 
@@ -113,7 +114,14 @@ __flybuk.on('init', () => {
     __flybuk.load('initUI.js', () => {
         __flybuk.load('renderUI.js', () => {
             __flybuk.emit('ui:prepare')
-            document.body.innerHTML = __flybuk.html
+            
+            if (__flybuk.config.target) {
+                const cont = document.querySelector(__flybuk.config.target)
+                cont.innerHTML = __flybuk.html
+            } else {
+                document.body.innerHTML = __flybuk.html
+            }
+            
             __flybuk.emit('ui:render')
         })
     })

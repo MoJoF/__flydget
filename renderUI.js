@@ -7,8 +7,8 @@ const renderers = {
 
 __flybuk.on('ui:render', () => {
     if (!__flybuk.getState().summ) {
-        document.querySelector('.main-block').style.display = "none"
-        document.querySelector('.first-run-block').style.display = "flex"
+        __flybuk.hide('.main-block')
+        __flybuk.show('.first-run-block')
     } else {
         const d = new Date()
         const year = d.getFullYear()

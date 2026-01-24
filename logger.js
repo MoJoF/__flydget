@@ -1,13 +1,15 @@
-const on_list = [
-    'init:before',
-    'init',
-    'ui:prepare',
-    'ui:render',
-    'init:after'
-]
-
-on_list.forEach(event => {
-    __flybuk.on(event, () => {
-        console.log(`[Logger] Event: ${event} is emitted...`)
+if (__flybuk.config.debug) {
+    const on_list = [
+        'init:before',
+        'init',
+        'ui:prepare',
+        'ui:render',
+        'init:after'
+    ]
+    
+    on_list.forEach(event => {
+        __flybuk.on(event, () => {
+            console.log(`[Logger] Event: ${event} is emitted...`)
+        })
     })
-})
+}
