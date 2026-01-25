@@ -28,6 +28,7 @@ __flybuk.on('ui:main-block', () => {
     }
 
     __flybuk.select('.main-block > .row > .block > .block__subblock > button.add-receive').onclick = () => {
-        __flybuk.emit('ui:new-receive-block')
+        __flybuk.hide('.main-block')
+        __flybuk.emit('ui:add-receive-block')
     }
 })

@@ -255,7 +255,46 @@ const settingsBlock = `
 `
 
 const newReceiveBlock = `
-<div class="new-receive-block" style="display: none;">
+<style>
+.add-receive-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.add-receive-block > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.add-receive-block > div > input {
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    background: var(--text-color);
+    padding: 10px;
+}
+
+.add-receive-block > div > button {
+    background: var(--secondary-color);
+    padding: 10px;
+    color: var(--bg-color);
+    border: 1px solid var(--secondary-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.add-receive-block > div > button:hover {
+    background: var(--bg-color);
+    color: var(--secondary-color);
+}
+</style>
+
+<div class="add-receive-block" style="display: none;">
     <div>
         <h2>Введите сумму нового дохода:</h2>
         <input type="number" />
