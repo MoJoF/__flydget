@@ -1,17 +1,42 @@
 const script = document.currentScript
-const key = script.dataset.key
 const target = script.dataset.target
 
 const config = {
     debug: true,
     target,
-    path: ""
+    path: "",
+    version: "0.1"
 }
 
 window.__flybuk = {
     hooks: {},
-    on(e, fn) { (this.hooks[e] ||= []).push(fn) },
-    emit(e, d) { (this.hooks[e] || []).forEach(fn => fn(d)) },
+    fired: Object.create(null),
+
+    on(e, fn) {
+        if (e in this.fired) fn(this.fired[e])
+        else (this.hooks[e] ||= []).push(fn)
+    },
+    emit(e, d) {
+        this.fired[e] = d
+            ; (this.hooks[e] || []).forEach(fn => fn(d))
+    },
+    once(e, fn) {
+        if (e in this.fired) {
+            fn(this.fired[e])
+            return
+        }
+        const wrapper = (d) => {
+            fn(d)
+            this.off(e, wrapper)
+        }
+        this.on(e, wrapper)
+    },
+    when(e, fn) {
+        if (e in this.fired) fn(this.fired[e])
+        else this.on(e, fn)
+    },
+    off(e, fn) { this.hooks[e] = (this.hooks[e] || []).filter(f => f !== fn) },
+
     config,
 
     State: {},
