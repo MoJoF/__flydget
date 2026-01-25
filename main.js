@@ -4,7 +4,8 @@ const target = script.dataset.target
 
 const config = {
     debug: true,
-    target
+    target,
+    path: ""
 }
 
 window.__flybuk = {
@@ -61,7 +62,7 @@ window.__flybuk = {
 
     load(src, cb = () => { }) {
         let s = document.createElement('script')
-        s.src = src
+        s.src = this.config.path + src
         s.defer = true
         s.onload = cb
         s.onerror = (e) => console.error(e)
@@ -70,7 +71,7 @@ window.__flybuk = {
 
     loadPlugin(src, cb = () => { }) {
         let s = document.createElement('script')
-        s.src = src
+        s.src = this.config.path + src
         s.defer = true
         s.onload = cb
         s.onerror = (e) => console.error(e)
