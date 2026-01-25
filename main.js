@@ -103,6 +103,11 @@ window.__flybuk.clearData = function () {
 window.__flybuk.data = {}
 window.__flybuk.data.currencies = ["RUB", "USD", "EUR"]
 
+// UI
+__flybuk.load('/ui/main_block.js')
+__flybuk.load('/ui/add_receive_block.js')
+__flybuk.load('/ui/first_run_block.js')
+
 __flybuk.load('logger.js', () => __flybuk.emit('init:before'))
 
 __flybuk.load('https://unpkg.com/localforage/dist/localforage.min.js', async () => {
