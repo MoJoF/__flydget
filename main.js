@@ -44,14 +44,14 @@ window.__flybuk = {
     },
 
     api() {
-        return {
+        return Object.freeze({
             on: this.on.bind(this),
             emit: this.emit.bind(this),
             getState: this.getState.bind(this),
             setState: this.setState.bind(this),
             getSettings: this.getSettings.bind(this),
             setSettings: this.setSettings.bind(this)
-        }
+        })
     },
 
     use(plugin) {
@@ -95,6 +95,14 @@ window.__flybuk.show = function (selector, mode = "flex") {
     el.style.display = mode
 }
 
+// Функция для дебага. Для того, чтобы очищать базу данных
+window.__flybuk.clearData = function () {
+    localforage.clear()
+}
+
+window.__flybuk.data = {}
+window.__flybuk.data.currencies = ["RUB", "USD", "EUR"]
+
 __flybuk.load('logger.js', () => __flybuk.emit('init:before'))
 
 __flybuk.load('https://unpkg.com/localforage/dist/localforage.min.js', async () => {
@@ -114,14 +122,14 @@ __flybuk.on('init', () => {
     __flybuk.load('initUI.js', () => {
         __flybuk.load('renderUI.js', () => {
             __flybuk.emit('ui:prepare')
-            
+
             if (__flybuk.config.target) {
                 const cont = document.querySelector(__flybuk.config.target)
                 cont.innerHTML = __flybuk.html
             } else {
                 document.body.innerHTML = __flybuk.html
             }
-            
+
             __flybuk.emit('ui:render')
         })
     })
