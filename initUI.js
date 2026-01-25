@@ -54,6 +54,12 @@ input[type=number]::-webkit-inner-spin-button {
     gap: 20px;
 }
 
+.main-block > header > .row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
 #month-year {
     font-size: var(--header-font-size);
 }
@@ -71,10 +77,12 @@ input[type=number]::-webkit-inner-spin-button {
 
 .main-block > .row > .block > .block__subblock {
     display: flex;
-    gap: 10px;
+    gap: 20px;
 }
 
-button.add-receive {
+button.add-receive,
+button.add_spent,
+button.to_settings {
     background: var(--secondary-color);
     padding: 10px;
     color: var(--bg-color);
@@ -84,9 +92,15 @@ button.add-receive {
     transition: .5s;
 }
 
-button.add-receive:hover {
+button.add-receive:hover,
+button.add_spent:hover,
+button.to_settings:hover {
     background: var(--bg-color);
     color: var(--secondary-color);
+}
+
+.add_spent {
+    margin-top: 20px;
 }
 
 .main-block > .row > .block > .block__title {
@@ -104,6 +118,7 @@ button.add-receive:hover {
 <header>
     <div class="row">
         <span id="month-year"></span>
+        <button class="to_settings">Настройки</button>
     </div>
 </header>
 <div class="row">
@@ -123,12 +138,13 @@ button.add-receive:hover {
     <h2>Расходы</h2>
     <div class="table_header">
         <span>Дата и время</span>
-        <span>Сумма</span>
         <span>Описание</span>
         <span>Категория</span>
+        <span>Сумма</span>
     </div>
     <div id="spents"></div>
     <span class="no-spents" style="display: none;">Вы еще ничего не потратили. Чтобы создать расход, нажмите кнопку "Добавить"</span>
+    <button class="add_spent">Добавить</button>
 </div>
 </div>
 `
