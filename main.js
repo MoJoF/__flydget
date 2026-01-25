@@ -27,9 +27,9 @@ window.__flybuk = {
             "Одежда",
             "Спорт",
             "Подарки"
-        ]
+        ],
+        plugins: []
     },
-    plugins: [],
 
     getState() { return this.State },
     setState(patch) {
@@ -55,7 +55,7 @@ window.__flybuk = {
     },
 
     use(plugin) {
-        this.plugins.push(plugin)
+        this.Settings.plugins.push(plugin)
         plugin(this.api())
     },
 
