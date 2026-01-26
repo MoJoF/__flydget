@@ -24,6 +24,7 @@ __flybuk.on('ui:first-run', () => { // Настройка модуля перв�
 
     // Панель для ввода первоначальной суммы
     const inputEl = __flybuk.select(".first-run-block > .block > input")
+    inputEl.focus()
     inputEl.oninput = (e) => {
         const value = e.target.value
         inputEl.value = value.replace(/[^0-9]/g, '')

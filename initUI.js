@@ -112,6 +112,37 @@ button.to_settings:hover {
     font-size: var(--big-font-size);
     color: var(--secondary-color);    
 }
+
+.main-block > .block > .table_header {
+    display: flex;
+    gap: 10px;
+}
+
+table {
+    border-collapse: separate; 
+    border-spacing: 15px 10px;
+    border: 1px solid var(--text-color); 
+}
+
+table > thead > tr,
+table > tbody > tr {
+    border: 1px solid var(--text-color);
+}
+
+table > tbody > tr > td > button {
+    color: var(--text-color);
+    background: var(--error-color);
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: .5s;
+}
+
+table > tbody > tr > td > button:hover {
+    color: var(--error-color);
+    background: var(--text-color);
+}
 </style>
 
 <div class="main-block">
@@ -136,13 +167,18 @@ button.to_settings:hover {
 </div>
 <div class="block">
     <h2>Расходы</h2>
-    <div class="table_header">
-        <span>Дата и время</span>
-        <span>Описание</span>
-        <span>Категория</span>
-        <span>Сумма</span>
-    </div>
-    <div id="spents"></div>
+    <table>
+        <thead class="table_header">
+            <tr>
+                <th>Описание</th>
+                <th>Сумма</th>
+                <th>Категория</th>
+                <th>Дата и время</th>
+                <th></th>
+            <tr>
+        </thead>
+        <tbody id="spents"></tbody>
+    </table>
     <span class="no-spents" style="display: none;">Вы еще ничего не потратили. Чтобы создать расход, нажмите кнопку "Добавить"</span>
     <button class="add_spent">Добавить</button>
 </div>
@@ -210,6 +246,61 @@ const firstRunBlock = `
 `
 
 const newSpentBlock = `
+<style>
+.new-spent-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.new-spent-block > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    border: 2px solid var(--secondary-color);
+    border-radius: 10px;
+}
+
+.new-spent-block > div > h2 {
+    font-size: var(--big-font-size);
+    color: var(--secondary-color);
+    line-height: 10%;
+}
+
+.new-spent-block > div > .row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.new-spent-block > div > .row > input {
+    outline: none;
+    padding: 10px;
+    background: var(--text-color);
+    color: var(--bg-color);
+    border: none;
+}
+
+.new-spent-block > div > .btn-cont {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+button#add-spent-button {
+    width: fit-content;
+    color: var(--bg-color);
+    background: var(--secondary-color);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 10px;
+}
+</style>
+
 <div class="new-spent-block" style="display: none;">
     <div>
         <h2>Новый расход:</h2>
@@ -219,13 +310,16 @@ const newSpentBlock = `
         </div>
         <div class="row">
             <span>Описание:</span>
-            <input id="new-spent-desc" />
+            <input id="add-spent-desc" />
         </div>
         <div class="row">
             <span>Категория:</span>
-            <select id="new-spent-category"></select>
+            <select id="add-spent-category"></select>
         </div>
-        <span class="error" style="display: none;">К сожалению, сумма расхода не может быть больше оставшегося бюджета</span>
+        <span class="error" style="display: none;">Сумма не может быть пустой</span>
+        <div class="btn-cont">
+            <button id="add-spent-button">Добавить расход</button>
+        </div>
     </div>
 </div>
 `
