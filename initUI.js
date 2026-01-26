@@ -298,7 +298,7 @@ const newReceiveBlock = `
     <div>
         <h2>Введите сумму нового дохода:</h2>
         <input type="number" />
-        <span class="error" style="display: none;">Число не может быть отрицательным</span>
+        <span class="error" style="display: none;">Введите число</span>
         <button>Подтвердить</button>
     </div>
 </div>

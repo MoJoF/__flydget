@@ -1,9 +1,48 @@
 __flybuk.on('ui:add-receive-block', () => {
     __flybuk.show('.add-receive-block')
 
-    const inputEl = __flybuk.select(".add-receive-block > div > input")
-    inputEl.oninput = (e) => {
+    // Проверка введённой суммы
+    function validate(v) {
+        const value = Number(v)
+        if (!value) {
+            __flybuk.show('.add-receive-block > div > span.error')
+            return false
+        }
+        __flybuk.hide('.add-receive-block > div > span.error')
+        return true
+    }
+
+    const addReceiveInput = __flybuk.select(".add-receive-block > div > input")
+    addReceiveInput.oninput = (e) => {
         const value = e.target.value
-        inputEl.value = value.replace(/[^0-9]/g, '')
+        addReceiveInput.value = value.replace(/[^0-9]/g, '')
+    }
+    addReceiveInput.onkeyup = (e) => {
+        if (e.key === "Enter") {
+            const result = validate(addReceiveInput.value)
+            if (result) {
+                const addReceiveSumm = Number(addReceiveInput.value)
+                const newSumm = Number(__flybuk.getState().summ) + addReceiveSumm
+                const newRemainingSumm = Number(__flybuk.getState().remaining_summ) + addReceiveSumm
+                __flybuk.setState({ summ: newSumm, remaining_summ: newRemainingSumm })
+                __flybuk.hide('.add-receive-summ')
+
+                __flybuk.emit('ui:main-block')
+            }
+        }
+    }
+
+    const addReceiveBtn = __flybuk.select(".add-receive-block > div > button")
+    addReceiveBtn.onclick = () => {
+        const result = validate(addReceiveInput.value)
+        if (result) {
+            const addReceiveSumm = Number(addReceiveInput.value)
+            const newSumm = Number(__flybuk.getState().summ) + addReceiveSumm
+            const newRemainingSumm = Number(__flybuk.getState().remaining_summ) + addReceiveSumm
+            __flybuk.setState({ summ: newSumm, remaining_summ: newRemainingSumm })
+            __flybuk.hide('.add-receive-summ')
+
+            __flybuk.emit('ui:main-block')
+        }
     }
 })
