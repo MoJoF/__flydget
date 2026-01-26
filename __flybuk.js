@@ -73,6 +73,9 @@ window.__flybuk = {
         return Object.freeze({
             on: this.on.bind(this),
             emit: this.emit.bind(this),
+            when: this.when.bind(this),
+            once: this.once.bind(this),
+            off: this.off.bind(this),
             getState: this.getState.bind(this),
             setState: this.setState.bind(this),
             getSettings: this.getSettings.bind(this),
