@@ -340,7 +340,7 @@ const settingsBlock = `
     </div>
     <h2>Настройки</h2>
     <div class="row">
-        <h3>Текущая валюта</h3>
+        <span>Текущая валюта</span>
         <select id="settings-currency">
             <option value="RUB">RUB</option>
             <option value="USD">USD</option>
@@ -349,13 +349,13 @@ const settingsBlock = `
     </div>
     <div class="block">
         <h3>Список категорий</h3>
-        <div class="block">
+        <div class="row">
             <h3>Создать новую категорию</h3>
             <input id="create-category" />
             <button>+</button>
         </div>
     </div>
-    <div class="block"></div>
+    <div class="block" id="categories-container"></div>
   </div>
 </div>
 `
