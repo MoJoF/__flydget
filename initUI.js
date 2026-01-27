@@ -350,6 +350,7 @@ const settingsBlock = `
     <div class="block">
         <h3>Список категорий</h3>
         <div class="row">
+            <h3>Создать новую категорию</h3>
             <input id="create-category" />
             <button>+</button>
         </div>
