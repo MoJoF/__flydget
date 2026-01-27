@@ -133,15 +133,15 @@ window.__flybuk.data = {}
 window.__flybuk.data.currencies = ["RUB", "USD", "EUR"]
 
 // UI
-__flybuk.load('/ui/main_block.js')
-__flybuk.load('/ui/add_receive_block.js')
-__flybuk.load('/ui/first_run_block.js')
-__flybuk.load('/ui/add_spent_block.js')
-__flybuk.load('/ui/settings_block.js')
+__flybuk.load('ui/main_block.js')
+__flybuk.load('ui/add_receive_block.js')
+__flybuk.load('ui/first_run_block.js')
+__flybuk.load('ui/add_spent_block.js')
+__flybuk.load('ui/settings_block.js')
 
 __flybuk.load('logger.js', () => __flybuk.emit('init:before'))
 
-__flybuk.load('/libs/localforage.min.js', async () => {
+__flybuk.load('libs/localforage.min.js', async () => {
     localforage.config({
         name: "__flydgetApp",
         driver: localforage.INDEXEDDB
