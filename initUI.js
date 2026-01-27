@@ -52,6 +52,7 @@ input {
     background: var(--text-color);
     border: none;
     outline: none;
+    border-radius: 10px;
 }
 
 .main-block {
@@ -332,6 +333,63 @@ button#add-spent-button {
 `
 
 const settingsBlock = `
+<style>
+.settings-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+
+.settings-block > div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 30%;
+}
+
+.settings-block > div > h2,
+.settings-block > div > .block > h3{
+  line-height: 10%;
+}
+
+.settings-block > div > .buttons-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.settings-block > div > .buttons-row > button,
+.settings-block > div > .block > .row > button{
+  border: none;
+  border: 1px solid var(--secondary-color);
+  border-radius: 10px;
+  padding: 10px;
+  color: var(--bg-color);
+  background: var(--secondary-color);
+  cursor: pointer;
+  transition: .5s;
+}
+
+.settings-block > div > .buttons-row > button:hover,
+.settings-block > div > .block > .row > button:hover{
+  color: var(--secondary-color);
+  background: var(--bg-color);
+}
+
+.settings-block > div > .row {
+  display: inline;
+}
+
+.settings-block > div > .row > select {
+  margin-left: 20px;
+}
+
+.settings-block > div > .block {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+</style>
 <div class="settings-block" style="display: none;">
   <div>
     <div class="buttons-row">
