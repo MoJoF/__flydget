@@ -339,6 +339,7 @@ const settingsBlock = `
   align-items: center;
   justify-content: center;
   height: 90vh;
+  margin-top: 20px;
 }
 
 .settings-block > div {
@@ -359,7 +360,7 @@ const settingsBlock = `
 }
 
 .settings-block > div > .buttons-row > button,
-.settings-block > div > .block > .row > button{
+.settings-block > div > .block > .row > div > button {
   border: none;
   border: 1px solid var(--secondary-color);
   border-radius: 10px;
@@ -371,7 +372,7 @@ const settingsBlock = `
 }
 
 .settings-block > div > .buttons-row > button:hover,
-.settings-block > div > .block > .row > button:hover{
+.settings-block > div > .block > .row > div > button:hover {
   color: var(--secondary-color);
   background: var(--bg-color);
 }
@@ -382,6 +383,7 @@ const settingsBlock = `
 
 .settings-block > div > .row > select {
   margin-left: 20px;
+  outline: none;
 }
 
 .settings-block > div > .block {
@@ -389,32 +391,61 @@ const settingsBlock = `
   flex-direction: column;
   margin-top: 10px;
 }
+
+#categories-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: scroll;
+    height: 200px;
+    outline: none;
+}
+
+#categories-container > .cat-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#categories-container > .cat-item > .del-cat {
+    padding: 10px;
+    border: 1px solid var(--error-color);
+    border-radius: 10px;
+    background: var(--error-color);
+    color: var(--text-color);
+    transition: .5s;
+    cursor: pointer;
+}
+
+#categories-container > .cat-item > .del-cat:hover {
+    background: var(--text-color);
+    color: var(--error-color);
+}
 </style>
 <div class="settings-block" style="display: none;">
-  <div>
-    <div class="buttons-row">
-      <button>Назад</button>
-      <button>Плагины</button>
-    </div>
-    <h2>Настройки</h2>
-    <div class="row">
-        <span>Текущая валюта</span>
-        <select id="settings-currency">
-            <option value="RUB">RUB</option>
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-        </select>
-    </div>
-    <div class="block">
-        <h3>Список категорий</h3>
-        <div class="row">
-            <h3>Создать новую категорию</h3>
-            <input id="create-category" />
-            <button>+</button>
+    <div>
+        <div class="buttons-row">
+            <button class="back-to-main">Назад</button>
+            <button class="to-plugins">Плагины</button>
         </div>
+        <h2>Настройки</h2>
+        <div class="row">
+            <span>Текущая валюта</span>
+            <select id="settings-currency"></select>
+        </div>
+        <div class="block">
+            <h3>Список категорий</h3>
+            <div class="row">
+                <h3>Создать новую категорию</h3>
+                <div>
+                    <input id="create-category" />
+                    <button>+</button>
+                </div>
+                <span class="error" style="display: none;">Название категории не может быть пустым.</span>
+            </div>
+        </div>
+        <div class="block" id="categories-container"></div>
     </div>
-    <div class="block" id="categories-container"></div>
-  </div>
 </div>
 `
 
@@ -468,12 +499,97 @@ const newReceiveBlock = `
 </div>
 `
 
+const pluginsBlock = `
+<style>
+.plugins-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+
+.plugins-block > div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.plugins-block > div > h2,
+.plugins-block > div > .block > h3{
+  line-height: 10%;
+}
+
+.plugins-block > div > .buttons-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.plugins-block > div > .buttons-row > button {
+  border: none;
+  border: 1px solid var(--secondary-color);
+  border-radius: 10px;
+  padding: 10px;
+  color: var(--bg-color);
+  background: var(--secondary-color);
+  cursor: pointer;
+  transition: .5s;
+}
+
+.plugins-block > div > .buttons-row > button:hover {
+  color: var(--secondary-color);
+  background: var(--bg-color);
+}
+
+.plugins-block > div > .plugins-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.plugins-block > div > .plugins-cont > .plugins-installed,
+.plugins-block > div > .plugins-cont > .plugins {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.plugins-block > div > .row > select {
+  margin-left: 20px;
+}
+
+.plugins-block > div > .block {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+</style>
+<div class="plugins-block" style="display: none;">
+    <div>
+        <div class="buttons-row">
+            <button class="to-settings">В настройки</button>
+        </div>
+        <h2>Плагины</h2>
+        <span>К сожалению, сумма расхода не может быть больше оставшихся денег.</span>
+        <div class="plugins-cont">
+            <h2>Установленные</h2>
+            <span class="no-plugins" style="display: none;">Вы пока не установили ни одного плагина.</span>
+            <div class="plugins-installed"></div>
+        </div>
+        <div class="plugins-cont">
+            <h2>Все плагины</h2>
+            <div class="plugins"></div>
+        </div>
+    </div>
+</div>
+`
+
 const ui = {
     mainBlock,
     firstRunBlock,
     newSpentBlock,
     settingsBlock,
-    newReceiveBlock
+    newReceiveBlock,
+    pluginsBlock
 }
 
 __flybuk.html = ""

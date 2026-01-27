@@ -15,7 +15,7 @@ __flybuk.on('ui:first-run', () => { // Настройка модуля перв�
 
     // Загрузка списка валют
     const selectCurrency = __flybuk.select(".first-run-block > .block > .row > select")
-    __flybuk.data.currencies.forEach(currency => {
+    __flybuk.getSettings().currencies.forEach(currency => {
         const optionEl = document.createElement('option')
         optionEl.value = currency
         optionEl.textContent = currency
@@ -37,7 +37,6 @@ __flybuk.on('ui:first-run', () => { // Настройка модуля перв�
                 __flybuk.setState({ summ: inputEl.value, remaining_summ: inputEl.value })
                 __flybuk.setSettings({ currency: currentCurrency })
                 __flybuk.hide('.first-run-block')
-
                 __flybuk.emit('ui:main-block')
             }
         }
@@ -52,7 +51,6 @@ __flybuk.on('ui:first-run', () => { // Настройка модуля перв�
             __flybuk.setState({ summ: inputEl.value, remaining_summ: inputEl.value })
             __flybuk.setSettings({ currency: currentCurrency })
             __flybuk.hide('.first-run-block')
-
             __flybuk.emit('ui:main-block')
         }
     }

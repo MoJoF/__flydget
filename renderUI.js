@@ -1,4 +1,4 @@
-const removeSpent = id => {
+const removeSpent = (id) => {
     let spents = __flybuk.getState().spents
     spents = spents.filter(spent => spent.id !== id)
     const spentContainer = __flybuk.select('.spent-item[data-id="' + id + "\"]")
@@ -16,6 +16,18 @@ const removeSpent = id => {
     __flybuk.emit('spents:remove-spent', { id })
 
     return true
+}
+
+const removeCategory = (title) => {
+    let categories = __flybuk.getSettings().categories
+    categories = categories.filter(cat => cat !== title)
+    __flybuk.emit("categories:remove-category", title)
+    __flybuk.setSettings({ categories })
+    __flybuk.select(".cat-item", true).forEach(el => {
+        if (el.querySelector('span').textContent === title) {
+            el.remove()
+        }
+    })
 }
 
 const renderers = {
@@ -69,6 +81,36 @@ const renderers = {
             selectCont.appendChild(categoryEl)
         })
     },
+    'settings-categories': (sel, cats) => {
+        const categoriesCont = __flybuk.select(sel)
+        cats.forEach((cat) => {
+            const catEl = document.createElement('div')
+            catEl.className = "cat-item"
+            
+            const catTitle = document.createElement('span')
+            catTitle.textContent = cat
+            
+            const catDelete = document.createElement('button')
+            catDelete.className = "del-cat"
+            catDelete.textContent = "Удалить"
+            catDelete.onclick = () => {
+                removeCategory(cat)
+            }
+
+            catEl.appendChild(catTitle)
+            catEl.appendChild(catDelete)
+            categoriesCont.appendChild(catEl)
+        })
+    },
+    'settings-currencies': (sel, currencies) => {
+        const currenciesCont = __flybuk.select(sel)
+        currencies.forEach(c => {
+            const currencyOption = document.createElement('option')
+            currencyOption.value = c
+            currencyOption.textContent = c
+            currenciesCont.appendChild(currencyOption)
+        })
+    }
 }
 
 __flybuk.on('ui:render', () => {
@@ -86,3 +128,7 @@ __flybuk.on('spents:new-receive', (data) => console.log(data))
 __flybuk.on('spents:new-spent', (data) => console.log(data))
 
 __flybuk.on('spents:remove-spent', (data) => console.log(data))
+
+__flybuk.on('categories:remove-category', (data) => console.log(data))
+
+__flybuk.on('categories:add-category', (data) => console.log(data))
