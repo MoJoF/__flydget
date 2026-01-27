@@ -333,8 +333,11 @@ button#add-spent-button {
 
 const settingsBlock = `
 <div class="settings-block" style="display: none;">
-    <button>Назад</button>
-    <button>Плагины</button>
+  <div>
+    <div class="buttons-row">
+      <button>Назад</button>
+      <button>Плагины</button>
+    </div>
     <h2>Настройки</h2>
     <div class="row">
         <h3>Текущая валюта</h3>
@@ -352,6 +355,7 @@ const settingsBlock = `
         </div>
     </div>
     <div class="block"></div>
+  </div>
 </div>
 `
 
