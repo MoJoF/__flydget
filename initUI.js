@@ -50,6 +50,8 @@ input[type=number]::-webkit-inner-spin-button {
 input {
     padding: 10px;
     background: var(--text-color);
+    border: none;
+    outline: none;
 }
 
 .main-block {
