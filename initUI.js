@@ -47,6 +47,11 @@ input[type=number]::-webkit-inner-spin-button {
     margin: 0;
 }
 
+input {
+    padding: 10px;
+    background: var(--text-color);
+}
+
 .main-block {
     padding: 50px 17.7vw;
     display: flex;
