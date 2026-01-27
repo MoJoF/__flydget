@@ -137,6 +137,7 @@ __flybuk.load('/ui/main_block.js')
 __flybuk.load('/ui/add_receive_block.js')
 __flybuk.load('/ui/first_run_block.js')
 __flybuk.load('/ui/add_spent_block.js')
+__flybuk.load('/ui/settings_block.js')
 
 __flybuk.load('logger.js', () => __flybuk.emit('init:before'))
 

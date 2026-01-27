@@ -17,7 +17,7 @@ __flybuk.on('ui:main-block', () => {
 
     renderers['simple']('#remaining-summ', `${__flybuk.getState().remaining_summ} ${__flybuk.getSettings().currency}`)
 
-    if (!__flybuk.getState().spents.length) {
+    if (!__flybuk.getState().hasOwnProperty('spents')) {
         __flybuk.show('.main-block > .block > span.no-spents', 'block')
         __flybuk.hide('table')
     } else {
@@ -34,5 +34,10 @@ __flybuk.on('ui:main-block', () => {
     __flybuk.select('.main-block > .block > button.add_spent').onclick = () => {
         __flybuk.hide('.main-block')
         __flybuk.emit('ui:add-spent-block')
+    }
+
+    __flybuk.select('.main-block > header > .row > button.to_settings').onclick = () => {
+        __flybuk.hide('.main-block')
+        __flybuk.emit('ui:settings-block')
     }
 })
