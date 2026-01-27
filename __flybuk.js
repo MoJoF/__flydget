@@ -4,7 +4,8 @@ const target = script.dataset.target
 const config = {
     debug: true,
     target,
-    path: "https://mojof.github.io/__flydget/",
+    path: "",
+    // path: "https://mojof.github.io/__flydget/",
     version: "0.1"
 }
 

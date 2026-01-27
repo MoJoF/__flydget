@@ -27,7 +27,6 @@ __flybuk.on('ui:add-receive-block', () => {
                 const newSumm = Number(__flybuk.getState().summ) + addReceiveSumm
                 const newRemainingSumm = Number(__flybuk.getState().remaining_summ) + addReceiveSumm
                 __flybuk.setState({ summ: newSumm, remaining_summ: newRemainingSumm })
-                __flybuk.hide('.add-receive-summ')
                 addReceiveInput.value = ''
                 __flybuk.emit('ui:main-block')
             }
@@ -43,8 +42,8 @@ __flybuk.on('ui:add-receive-block', () => {
             const newSumm = Number(__flybuk.getState().summ) + addReceiveSumm
             const newRemainingSumm = Number(__flybuk.getState().remaining_summ) + addReceiveSumm
             __flybuk.setState({ summ: newSumm, remaining_summ: newRemainingSumm })
-            __flybuk.hide('.add-receive-summ')
             addReceiveInput.value = ''
+            __flybuk.hide('.add-receive-block')
             __flybuk.emit('ui:main-block')
         }
     }

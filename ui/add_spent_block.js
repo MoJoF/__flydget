@@ -54,6 +54,7 @@ __flybuk.on('ui:add-spent-block', () => {
 
                 __flybuk.setState({ spents, remaining_summ })
 
+                __flybuk.hide('.new-spent-block')
                 __flybuk.emit('ui:main-block')
             }
         }
@@ -89,6 +90,7 @@ __flybuk.on('ui:add-spent-block', () => {
 
                 __flybuk.setState({ spents, remaining_summ })
 
+                __flybuk.hide('.new-spent-block')
                 __flybuk.emit('ui:main-block')
             }
         }
@@ -123,6 +125,7 @@ __flybuk.on('ui:add-spent-block', () => {
 
             __flybuk.setState({ spents, remaining_summ })
 
+            __flybuk.hide('.new-spent-block')
             __flybuk.emit('ui:main-block')
         }
     }
