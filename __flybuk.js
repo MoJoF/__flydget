@@ -88,7 +88,7 @@ window.__flybuk = {
 
     use(plugin) {
         let plugins = this.getSettings().plugins
-        if (plugins.find(plug => plugin.meta === plug)) {
+        if (plugins.find(plug => plugin.meta.id === plug.id)) {
             if (!plug?.id) {
                 console.error("[ERROR] Плагин должен содержать id")
                 return
@@ -115,16 +115,17 @@ window.__flybuk = {
     loadPlugin(src, cb = () => { }) {
         let s = document.createElement('script')
         s.src = this.config.path + src
-        s.defer = true
         s.onload = cb
         s.onerror = (e) => console.error(e)
         document.body.appendChild(s)
     },
 
     bootstrapPlugins() {
-        this.getSettings().plugins.forEach(meta => {
-            this.loadPlugin(meta.file)
-        })
+        this.getSettings().plugins
+            .filter(p => p.enabled)
+            .forEach(p => {
+                this.loadPlugin(p.file)
+            })
     },
 
     isInstalled(id) {
@@ -135,13 +136,13 @@ window.__flybuk = {
     },
 
     definePlugin({ meta, install }) {
-        if (this.pluginsRegistry[meta.id]) return
-
         this.pluginsRegistry[meta.id] = { meta, install }
 
-        if (this.isInstalled(meta.id)) {
+        const installed = this.Settings.plugins.find(p => p.id === meta.id)
+
+        if (installed?.enabled) {
             install(this.api())
-            this.emit('plugin:installed')
+            this.emit('plugin:activated', meta)
         }
     },
 
@@ -156,6 +157,22 @@ window.__flybuk = {
             this.pluginsRegistry[meta.id].install(this.api())
             this.emit('plugin:installed', meta)
         }
+    },
+
+    async installPluginFromCatalog(plugin) {
+        this.loadPlugin(plugin.file, () => {
+            const plugins = [
+                ...this.Settings.plugins,
+                {
+                    id: plugin.id,
+                    version: plugin.version,
+                    file: plugin.file,
+                    enabled: true
+                }
+            ]
+
+            this.setSettings({ plugins })
+        })
     }
 }
 
@@ -181,7 +198,6 @@ window.__flybuk.clearData = function () {
     localforage.clear()
 }
 
-
 __flybuk.load('logger.js', () => __flybuk.emit('init:before'))
 
 __flybuk.load('libs/localforage.min.js', async () => {
@@ -193,19 +209,19 @@ __flybuk.load('libs/localforage.min.js', async () => {
     window.__flybuk.State = await localforage.getItem('state') || window.__flybuk.getState()
     window.__flybuk.Settings = await localforage.getItem('settings') || window.__flybuk.getSettings()
 
+    // UI
+    __flybuk.load('ui/main_block.js')
+    __flybuk.load('ui/add_receive_block.js')
+    __flybuk.load('ui/first_run_block.js')
+    __flybuk.load('ui/add_spent_block.js')
+    __flybuk.load('ui/settings_block.js')
+    __flybuk.load('ui/plugins_block.js')
+
+    // Plugins
+    __flybuk.bootstrapPlugins()
+
     __flybuk.emit('init')
 })
-
-// UI
-__flybuk.load('ui/main_block.js')
-__flybuk.load('ui/add_receive_block.js')
-__flybuk.load('ui/first_run_block.js')
-__flybuk.load('ui/add_spent_block.js')
-__flybuk.load('ui/settings_block.js')
-__flybuk.load('ui/plugins_block.js')
-
-// Plugins
-__flybuk.bootstrapPlugins()
 
 
 __flybuk.on('init', () => {
