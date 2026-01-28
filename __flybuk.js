@@ -12,6 +12,7 @@ const config = {
 window.__flybuk = {
     hooks: {},
     fired: Object.create(null),
+    pluginsRegistry: Object.create(null),
 
     on(e, fn) {
         if (e in this.fired) fn(this.fired[e])
@@ -124,6 +125,37 @@ window.__flybuk = {
         this.getSettings().plugins.forEach(meta => {
             this.loadPlugin(meta.file)
         })
+    },
+
+    isInstalled(id) {
+        const pluginsList = this.Settings.plugins
+        if (!pluginsList) return false
+        if (pluginsList.find(plug => plug.id === id)) return true
+        return false
+    },
+
+    definePlugin({ meta, install }) {
+        if (this.pluginsRegistry[meta.id]) return
+
+        this.pluginsRegistry[meta.id] = { meta, install }
+
+        if (this.isInstalled(meta.id)) {
+            install(this.api())
+            this.emit('plugin:installed')
+        }
+    },
+
+    installPlugin(meta) {
+        if (!this.isInstalled(meta.id)) {
+            let plugins = this.Settings.plugins
+            plugins = [...plugins, meta]
+            this.setSettings({ plugins })
+        }
+
+        if (this.pluginsRegistry[meta.id]) {
+            this.pluginsRegistry[meta.id].install(this.api())
+            this.emit('plugin:installed', meta)
+        }
     }
 }
 
