@@ -146,33 +146,13 @@ window.__flybuk = {
         }
     },
 
-    installPlugin(meta) {
-        if (!this.isInstalled(meta.id)) {
+    installPluginFromCatalog(plugin) {
+        if (!this.isInstalled(plugin.id)) {
             let plugins = this.Settings.plugins
-            plugins = [...plugins, meta]
+            plugins = [...plugins, { ...plugin, enabled: false }]
             this.setSettings({ plugins })
+            this.emit('plugin:installed', plugin)
         }
-
-        if (this.pluginsRegistry[meta.id]) {
-            this.pluginsRegistry[meta.id].install(this.api())
-            this.emit('plugin:installed', meta)
-        }
-    },
-
-    async installPluginFromCatalog(plugin) {
-        this.loadPlugin(plugin.file, () => {
-            const plugins = [
-                ...this.Settings.plugins,
-                {
-                    id: plugin.id,
-                    version: plugin.version,
-                    file: plugin.file,
-                    enabled: true
-                }
-            ]
-
-            this.setSettings({ plugins })
-        })
     }
 }
 

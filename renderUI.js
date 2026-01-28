@@ -110,6 +110,42 @@ const renderers = {
             currencyOption.textContent = c
             currenciesCont.appendChild(currencyOption)
         })
+    },
+    'all-plugins': (sel, plugins) => {
+        const pluginsCont = __flybuk.select(sel)
+        pluginsCont.innerHTML = ''
+
+        plugins?.forEach(plugin => {
+            const pluginItemEl = document.createElement('div')
+            pluginItemEl.className = "plugin-item"
+
+            const pluginLogoEl = document.createElement('img')
+            pluginLogoEl.src = plugin?.icon || __flybuk.config.path + "images/no-photo.png"
+
+            const pluginTextBlock = document.createElement('div')
+            pluginTextBlock.className = "plugin-text-block"
+
+            const pluginTitle = document.createElement('span')
+            pluginTitle.className = "plugin-title"
+            pluginTitle.textContent = plugin.title
+
+            const pluginDescription = document.createElement('span')
+            pluginDescription.className = "plugin-desc"
+            pluginDescription.textContent = plugin.description
+
+            const installPluginButton = document.createElement('button')
+            installPluginButton.className = "plugin-install"
+            installPluginButton.textContent = "Установить"
+            installPluginButton.onclick = () => __flybuk.installPluginFromCatalog(plugin)
+
+            pluginTextBlock.appendChild(pluginTitle)
+            pluginTextBlock.appendChild(pluginDescription)
+            pluginTextBlock.appendChild(installPluginButton)
+
+            pluginItemEl.appendChild(pluginLogoEl)
+            pluginItemEl.appendChild(pluginTextBlock)
+            pluginsCont.appendChild(pluginItemEl)
+        })
     }
 }
 

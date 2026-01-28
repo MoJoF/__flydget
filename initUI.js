@@ -12,6 +12,8 @@ const mainBlock = `
     --header-font-size: 36px;
     --text-font-size: 24px;
     --big-font-size: 48px;
+    --plugin-desc-font-size: 20px;
+    --plugin-btn-font-size: 16px;
 }
 
 ::selection {
@@ -561,6 +563,49 @@ const pluginsBlock = `
   display: flex;
   flex-direction: column;
   margin-top: 10px;
+}
+
+.plugin-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid var(--secondary-color);
+    width: 400px;
+}
+
+.plugin-item > img {
+    object-fit: contain;
+}
+
+.plugin-item > .plugin-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.plugin-item > .plugin-text-block > span.plugin-title {
+    font-size: var(--text-font-size);
+}
+
+.plugin-item > .plugin-text-block > span.plugin-desc {
+    font-size: var(--plugin-desc-font-size);
+}
+
+.plugin-item > .plugin-text-block > button.plugin-install {
+    padding: 10px;
+    width: fit-content;
+    border: 1px solid var(--secondary-color);
+    border-radius: 10px;
+    background: var(--secondary-color);
+    transition: .5s;
+    cursor: pointer;
+    font-size: var(--plugin-btn-font-size);
+}
+
+.plugin-item > .plugin-text-block > button.plugin-install:hover {
+    background: var(--bg-color);
+    color: var(--secondary-color);
 }
 </style>
 <div class="plugins-block" style="display: none;">
