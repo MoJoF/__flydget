@@ -4,7 +4,14 @@ if (__flybuk.config.debug) {
         'init',
         'ui:prepare',
         'ui:render',
-        'init:after'
+        'init:after',
+
+        'currency:change',
+        'spents:new-receive',
+        'spents:new-spent',
+        'spents:remove-spent',
+        'categories:remove-category',
+        'categories:add-category'
     ]
     
     on_list.forEach(event => {

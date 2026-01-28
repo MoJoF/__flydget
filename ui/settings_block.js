@@ -3,6 +3,21 @@ __flybuk.on('ui:settings-block', () => {
     renderers['settings-categories']('#categories-container', __flybuk.getSettings().categories)
     renderers['settings-currencies']('select#settings-currency', __flybuk.getSettings().currencies)
 
+    // При загрузке страницы валюта должна быть такая же, как в локалке
+    const currencySelect = __flybuk.select('select#settings-currency')
+    currencySelect.value = __flybuk.getSettings().currency
+    
+    // Старая валюта. Используется при смене валюты
+    const oldCurrency = currencySelect.value
+    
+    __flybuk.on('currency:change', (data) => __flybuk.setSettings({ currency: data.newCurrency }))
+
+    // При смене валюты, её смена в настройках
+    currencySelect.onchange = (e) => {
+        const newCurrency = e.target.value
+        __flybuk.emit('currency:change', { oldCurrency, newCurrency })
+    }
+
     // Нажатие кнопки "Назад"
     __flybuk.select('.settings-block > div > .buttons-row > .back-to-main').onclick = () => {
         __flybuk.select('#categories-container').innerHTML = ""

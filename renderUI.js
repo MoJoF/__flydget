@@ -122,13 +122,3 @@ __flybuk.on('ui:render', () => {
 
     __flybuk.emit('init:after')
 })
-
-__flybuk.on('spents:new-receive', (data) => console.log(data))
-
-__flybuk.on('spents:new-spent', (data) => console.log(data))
-
-__flybuk.on('spents:remove-spent', (data) => console.log(data))
-
-__flybuk.on('categories:remove-category', (data) => console.log(data))
-
-__flybuk.on('categories:add-category', (data) => console.log(data))
