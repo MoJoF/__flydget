@@ -86,10 +86,10 @@ const renderers = {
         cats.forEach((cat) => {
             const catEl = document.createElement('div')
             catEl.className = "cat-item"
-            
+
             const catTitle = document.createElement('span')
             catTitle.textContent = cat
-            
+
             const catDelete = document.createElement('button')
             catDelete.className = "del-cat"
             catDelete.textContent = "Удалить"
@@ -136,7 +136,15 @@ const renderers = {
             const installPluginButton = document.createElement('button')
             installPluginButton.className = "plugin-install"
             installPluginButton.textContent = "Установить"
-            installPluginButton.onclick = () => __flybuk.installPluginFromCatalog(plugin)
+            installPluginButton.onclick = () => __flybuk.installPluginFromCatalog({
+                author: plugin.author,
+                description: plugin.description,
+                enabled: false,
+                file: plugin.file,
+                id: plugin.id,
+                title: plugin.title,
+                version: plugin.version
+            })
 
             pluginTextBlock.appendChild(pluginTitle)
             pluginTextBlock.appendChild(pluginDescription)
@@ -146,7 +154,51 @@ const renderers = {
             pluginItemEl.appendChild(pluginTextBlock)
             pluginsCont.appendChild(pluginItemEl)
         })
-    }
+    },
+    'installed-plugins': (sel, plugins) => {
+        const pluginsCont = __flybuk.select(sel)
+        pluginsCont.innerHTML = ''
+
+        plugins?.forEach(plugin => {
+            const pluginItemEl = document.createElement('div')
+            pluginItemEl.className = "plugin-item"
+
+            const pluginLogoEl = document.createElement('img')
+            pluginLogoEl.src = plugin?.icon || __flybuk.config.path + "images/no-photo.png"
+
+            const pluginTextBlock = document.createElement('div')
+            pluginTextBlock.className = "plugin-text-block"
+
+            const pluginTitle = document.createElement('span')
+            pluginTitle.className = "plugin-title"
+            pluginTitle.textContent = plugin.title
+
+            const pluginDescription = document.createElement('span')
+            pluginDescription.className = "plugin-desc"
+            pluginDescription.textContent = plugin.description
+
+            pluginTextBlock.appendChild(pluginTitle)
+            pluginTextBlock.appendChild(pluginDescription)
+
+            if (!plugin.enabled) {
+                const activatePluginButton = document.createElement('button')
+                activatePluginButton.className = "plugin-activate"
+                activatePluginButton.textContent = "Активировать"
+                activatePluginButton.onclick = () => __flybuk.activatePlugin(plugin)
+                pluginTextBlock.appendChild(activatePluginButton)
+            } else if (plugin.enabled) {
+                const deactivatePluginButton = document.createElement('button')
+                deactivatePluginButton.className = "plugin-deactivate"
+                deactivatePluginButton.textContent = "Деактивировать"
+                deactivatePluginButton.onclick = () => __flybuk.deactivatePlugin(plugin)
+                pluginTextBlock.appendChild(deactivatePluginButton)
+            }
+
+            pluginItemEl.appendChild(pluginLogoEl)
+            pluginItemEl.appendChild(pluginTextBlock)
+            pluginsCont.appendChild(pluginItemEl)
+        })
+    },
 }
 
 __flybuk.on('ui:render', () => {

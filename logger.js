@@ -19,6 +19,6 @@ if (__flybuk.config.debug) {
             console.log(`[Logger] Event: ${event} is emitted...`)
         })
     })
-    
-    __flybuk.on('plugin:installed', (data) => console.log(data))
+
+    __flybuk.on('plugin:installed', (data) => console.log(`[Logger] Plugin installed. Data: ${data}`))
 }

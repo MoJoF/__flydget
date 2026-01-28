@@ -1,12 +1,11 @@
 __flybuk.on('ui:plugins-block', () => {
     __flybuk.show('.plugins-block')
 
-
-
     const render = plugins => {
         const notInstalledPlugins = plugins.filter(plugin => !__flybuk.isInstalled(plugin.id));
         const installedPlugins = __flybuk.getSettings().plugins
         renderers['all-plugins']('.plugins', notInstalledPlugins)
+        renderers['installed-plugins']('.plugins-installed', installedPlugins)
     }
     
     fetch(atob('aHR0cHM6Ly9yZWQtZnJvZy0zNWFmLm9teXJhdWN5LndvcmtlcnMuZGV2Lw=='))

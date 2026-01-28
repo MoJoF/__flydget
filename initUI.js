@@ -592,7 +592,9 @@ const pluginsBlock = `
     font-size: var(--plugin-desc-font-size);
 }
 
-.plugin-item > .plugin-text-block > button.plugin-install {
+.plugin-item > .plugin-text-block > button.plugin-install,
+.plugin-item > .plugin-text-block > button.plugin-activate,
+.plugin-item > .plugin-text-block > button.plugin-deactivate {
     padding: 10px;
     width: fit-content;
     border: 1px solid var(--secondary-color);
@@ -603,7 +605,9 @@ const pluginsBlock = `
     font-size: var(--plugin-btn-font-size);
 }
 
-.plugin-item > .plugin-text-block > button.plugin-install:hover {
+.plugin-item > .plugin-text-block > button.plugin-install:hover,
+.plugin-item > .plugin-text-block > button.plugin-activate:hover,
+.plugin-item > .plugin-text-block > button.plugin-deactivate:hover {
     background: var(--bg-color);
     color: var(--secondary-color);
 }

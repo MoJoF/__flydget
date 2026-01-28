@@ -87,20 +87,7 @@ window.__flybuk = {
     },
 
     use(plugin) {
-        let plugins = this.getSettings().plugins
-        if (plugins.find(plug => plugin.meta.id === plug.id)) {
-            if (!plug?.id) {
-                console.error("[ERROR] Плагин должен содержать id")
-                return
-            }
-            plugin.install(this.api())
-            this.emit('plugin:activated', plugin.meta)
-        } else {
-            plugins = [...plugins, plugin.meta]
-            this.setSettings({ plugins })
-            plugin.install(this.api())
-            this.emit('plugin:installed', plugin.meta)
-        }
+        plugin(this.api())
     },
 
     load(src, cb = () => { }) {
@@ -133,6 +120,10 @@ window.__flybuk = {
         if (!pluginsList) return false
         if (pluginsList.find(plug => plug.id === id)) return true
         return false
+    },
+
+    activatePlugin(plugin) {
+
     },
 
     definePlugin({ meta, install }) {
