@@ -151,9 +151,6 @@ window.__flybuk = {
 
     installPluginFromCatalog(plugin) {
         if (!this.isInstalled(plugin.id)) {
-            let plugins = this.Settings.plugins
-            plugins = [...plugins, { ...plugin, enabled: false }]
-            this.setSettings({ plugins })
             this.emit('plugin:installed', plugin)
         }
     },
@@ -198,6 +195,8 @@ __flybuk.load('libs/localforage.min.js', async () => {
 
     window.__flybuk.State = await localforage.getItem('state') || window.__flybuk.getState()
     window.__flybuk.Settings = await localforage.getItem('settings') || window.__flybuk.getSettings()
+
+    __flybuk.load('pluginManager.js')
 
     // UI
     __flybuk.load('ui/main_block.js')
