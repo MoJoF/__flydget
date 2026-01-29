@@ -136,15 +136,7 @@ window.__flybuk = {
     deactivatePlugin(plugData) {
         const { meta, deactivate } = this.pluginsRegistry[plugData.id] // получаем свойства плагина и метод deactivate
         deactivate(this.api()) // деактивируем плагин
-        let pluginObject = this.Settings.plugins.find(plug => plug.id === meta.id) // Ищем объект плагина в настройках
-        pluginObject = { ...pluginObject, enabled: false } // В настройках ставим плагин выключенным
-        let plugins = this.Settings.plugins // Получаем список плагинов из настроек
-        plugins = plugins.filter(plug => plug.id !== pluginObject.id) // Удаляем объект плагина, чтобы заменить другим (с выключенным состоянием)
-        plugins = [...plugins, pluginObject] // Перезаписываем объект с плагином
-        delete this.pluginsRegistry[plugData.id] // Стираем плагин из регистра
-        this.setSettings({ plugins }) // Обновляем настройки
-
-        __flybuk.emit('plugin:deactivated', meta) // Пробрасываем событие (не выполнится)
+        __flybuk.emit('plugin:deactivate', meta) // Пробрасываем событие (не выполнится)
     },
 
     // Реализовать функционал для удаления плагина
@@ -159,7 +151,7 @@ window.__flybuk = {
         const { meta, activate, deactivate } = plugData
         this.pluginsRegistry[meta.id] = { meta, activate, deactivate }
         activate(this.api())
-        __flybuk.emit('plugin:activated', meta)
+        __flybuk.emit('plugin:activate', meta)
     }
 }
 
