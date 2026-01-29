@@ -147,6 +147,8 @@ window.__flybuk = {
         __flybuk.emit('plugin:deactivated', meta) // Пробрасываем событие (не выполнится)
     },
 
+    // Реализовать функционал для удаления плагина
+
     installPluginFromCatalog(plugin) {
         if (!this.isInstalled(plugin.id)) {
             let plugins = this.Settings.plugins
