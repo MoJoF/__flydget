@@ -136,10 +136,12 @@ window.__flybuk = {
     deactivatePlugin(plugData) {
         const { meta, deactivate } = this.pluginsRegistry[plugData.id] // получаем свойства плагина и метод deactivate
         deactivate(this.api()) // деактивируем плагин
-        __flybuk.emit('plugin:deactivate', meta) // Пробрасываем событие (не выполнится)
+        this.emit('plugin:deactivate', meta) // Пробрасываем событие (не выполнится)
     },
 
-    // Реализовать функционал для удаления плагина
+    deletePlugin(meta) {
+        this.emit('plugin:uninstall', meta)
+    },
 
     installPluginFromCatalog(plugin) {
         if (!this.isInstalled(plugin.id)) {

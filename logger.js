@@ -23,4 +23,6 @@ if (__flybuk.config.debug) {
     __flybuk.on('plugin:installed', (data) => console.log(`[Logger] Plugin installed. Data: ${data}`))
 
     __flybuk.on('plugin:activated', (data) => console.log(`[Logger] Plugin activated. Data: ${data}`))
+
+    __flybuk.on('plugin:uninstall', () => console.log('Плагин удалён'))
 }

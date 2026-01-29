@@ -186,6 +186,12 @@ const renderers = {
                 activatePluginButton.textContent = "Активировать"
                 activatePluginButton.onclick = () => __flybuk.activatePlugin(plugin)
                 pluginTextBlock.appendChild(activatePluginButton)
+
+                const deletePluginButton = document.createElement('button')
+                deletePluginButton.className = "plugin-delete"
+                deletePluginButton.textContent = "Удалить"
+                deletePluginButton.onclick = () => __flybuk.deletePlugin(plugin)
+                pluginTextBlock.appendChild(deletePluginButton) 
             } else if (plugin.enabled) {
                 const deactivatePluginButton = document.createElement('button')
                 deactivatePluginButton.className = "plugin-deactivate"

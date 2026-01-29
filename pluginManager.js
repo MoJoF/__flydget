@@ -4,7 +4,12 @@ __flybuk.on('plugin:installed', (plugin) => {
     __flybuk.setSettings({ plugins })
 })
 
-__flybuk.on('plugin:uninstalled', (plugin) => { })
+__flybuk.on('plugin:uninstall', (plugin) => {
+    let pluginObject = __flybuk.getSettings().plugins.find(plug => plug.id === plugin.id)
+    let plugins = __flybuk.getSettings().plugins
+    plugins = plugins.filter(p => p.id !== pluginObject.id)
+    __flybuk.setSettings({ plugins })
+})
 
 __flybuk.on('plugin:activate', (plugin) => { })
 
