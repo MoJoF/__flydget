@@ -7,15 +7,22 @@
         file: 'plugins/CurrencyList.js'
     }
 
-    function install(api) {
+    let additionalCurrencies = ["AUD", "AZN", "RUP", "AED", "CNY", "TRY"]
+
+    function activate(api) {
         api.when('init', () => {
-            console.log('Плагин активирован')
+            let currencyList = api.getSettings().currencies
+            if (currencyList.length === 3) {
+                currencyList = [...currencyList, ...additionalCurrencies]
+                api.setSettings({ currencies: currencyList })
+            }
         })
     }
 
     function deactivate(api) {
-        console.log('Плагин деактивирован')
+        let currencyList = api.getSettings().currencies.filter(cur => !additionalCurrencies.includes(cur))
+        api.setSettings({ currencies: currencyList })
     }
 
-    __flybuk.registerPlugin({ meta, install, deactivate })
+    __flybuk.registerPlugin({ meta, activate, deactivate })
 })()
