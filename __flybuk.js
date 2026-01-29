@@ -123,18 +123,18 @@ window.__flybuk = {
     },
 
     activatePlugin(plugin) {
-
+        this.loadPlugin(plugin.file, () => {
+            let pluginObject = this.Settings.plugins.find(plug => plug.id === plugin.id)
+            pluginObject = { ...pluginObject, enabled: true }
+            let plugins = this.Settings.plugins
+            plugins = plugins.filter(plug => plug.id !== pluginObject.id)
+            plugins = [...plugins, pluginObject]
+            this.setSettings({ plugins })
+        })
     },
 
-    definePlugin({ meta, install }) {
-        this.pluginsRegistry[meta.id] = { meta, install }
-
-        const installed = this.Settings.plugins.find(p => p.id === meta.id)
-
-        if (installed?.enabled) {
-            install(this.api())
-            this.emit('plugin:activated', meta)
-        }
+    deactivatePlugin(plugin) {
+        
     },
 
     installPluginFromCatalog(plugin) {
@@ -144,6 +144,13 @@ window.__flybuk = {
             this.setSettings({ plugins })
             this.emit('plugin:installed', plugin)
         }
+    },
+
+    registerPlugin(plugData) {
+        const { meta, install, deactivate } = plugData
+        this.pluginsRegistry[meta.id] = { meta, install, deactivate }
+        install(this.api())
+        __flybuk.emit('plugin:activated', meta)
     }
 }
 

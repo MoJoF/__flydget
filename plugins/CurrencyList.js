@@ -12,4 +12,10 @@
             console.log('Плагин активирован')
         })
     }
+
+    function deactivate(api) {
+        console.log('Плагин деактивирован')
+    }
+
+    __flybuk.registerPlugin({ meta, install, deactivate })
 })()
