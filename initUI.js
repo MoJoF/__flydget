@@ -4,6 +4,17 @@ const mainBlock = `
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap');
 
+select {
+    border: none;
+    border: 1px solid var(--secondary-color);
+    border-radius: 10px;
+    padding: 10px;
+    color: var(--bg-color);
+    background: var(--secondary-color);
+    cursor: pointer;
+    transition: .5s;
+}
+
 :root {
     --bg-color: #1b1b1b;
     --text-color: #E6D5B8;
